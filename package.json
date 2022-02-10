@@ -1,0 +1,16 @@
+{
+  "name": "shortcake",
+  "version": "1.0.0",
+  "description": "URL Shortener",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "test"
+  },
+  "author": "Matthew Caloger",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "sqlite3": "^5.0.2"
+  }
+}
