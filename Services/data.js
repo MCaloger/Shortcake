@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3').verbose();
 class DataConnector {
     constructor() {
         let path = process.env.DB;
-        this.database = new sqlite3.Database(process.env.DB, (err) => {
+        this.database = new sqlite3.Database(path, (err) => {
             if (err) {
                 console.error(err.message)
             }

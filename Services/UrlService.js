@@ -1,11 +1,9 @@
-const sanitizeUrl = require("@braintree/sanitize-url").sanitizeUrl
-const UrlDAO = require("../DAOs/UrlDAO")
 
+const UrlDao = require("../DAOs/UrlDao")
+const UrlSanitizer = require('./UrlSanitizer')
 class UrlService {
 
-    sanitize(input) {
-        return sanitizeUrl(input.toString());
-    }
+    
 
     /**
      * 
@@ -15,8 +13,8 @@ class UrlService {
     async createUrl(url) {
         try {
             if (url != "") {
-                let sanitized = this.sanitize(url)
-                let addToDb = await UrlDAO.addUrl(sanitized);
+                let sanitized = UrlSanitizer(url)
+                let addToDb = await UrlDao.addUrl(sanitized);
     
                 let err = addToDb.err
                 let code = addToDb.code
@@ -45,8 +43,8 @@ class UrlService {
      */
     async getUrl(code) {
         try {
-            let url = await UrlDAO.getUrlFromCode(code)
-            let sanitizedUrl = this.sanitize(url.result)
+            let url = await UrlDao.getUrlFromCode(code)
+            let sanitizedUrl = UrlSanitizer(url.result)
             return url.result
         } catch(err) {
             throw new Error("System Error: Unable to get Url from code.")
