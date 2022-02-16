@@ -10,7 +10,6 @@
   "author": "Matthew Caloger",
   "license": "ISC",
   "dependencies": {
-    "@braintree/sanitize-url": "^5.0.2",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "sqlite3": "^5.0.2"
