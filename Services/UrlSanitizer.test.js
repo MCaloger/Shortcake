@@ -16,7 +16,7 @@ describe('Url sanitizer', () => {
 
     it('should test that error is thrown on invalid URL protocol', () => {
         expect(() => {
-            UrlSanitizer.sanitize("javascript:void")
+            UrlSanitizer.sanitize("javascript:console.log('javascript');alert('javascript')")
         }).toThrow('Invalid Url.')
     })
 })

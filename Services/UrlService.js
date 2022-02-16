@@ -13,24 +13,16 @@ class UrlService {
     async createUrl(url) {
         try {
             if (url != "") {
-                let sanitized = UrlSanitizer(url)
-                let addToDb = await UrlDao.addUrl(sanitized);
-    
-                let err = addToDb.err
-                let code = addToDb.code
+                const sanitized = UrlSanitizer.sanitize(url)
+                
+                const addedUrl = await UrlDao.addUrl(sanitized.href);
 
-                if (err === null) {
-                    console.log(code);
-                    return code
-                } else {
-                    throw new Error("System Error: Unable to add Url")
-                }
+                return addedUrl
             } else {
                 throw new Error("System Error: Missing Url")
             }
         } catch (err) {
-            console.log(err)
-            throw new Error("System Error")
+            throw new Error("System Error", err.message)
         }
     }
 
@@ -44,8 +36,9 @@ class UrlService {
     async getUrl(code) {
         try {
             let url = await UrlDao.getUrlFromCode(code)
-            let sanitizedUrl = UrlSanitizer(url.result)
-            return url.result
+
+            let sanitizedUrl = UrlSanitizer.sanitize(url)
+            return url
         } catch(err) {
             throw new Error("System Error: Unable to get Url from code.")
         }
