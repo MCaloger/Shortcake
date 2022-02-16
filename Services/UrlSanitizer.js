@@ -1,6 +1,5 @@
 class UrlSanitizer {
 
-
     sanitize(input) {
         try {
             let url = new URL(input)

@@ -1,14 +1,10 @@
 const UrlSanitizer = require('./UrlSanitizer')
 
-require('dotenv').config()
-
-
 describe('Url sanitizer', () => {
     it('should return the Url if it validates', () => {
-        const path = "https://caloger.com/";
-        expect(
-            UrlSanitizer.sanitize(path)
-        ).toBe(path);
+        const path = "https://caloger.com";
+        const sanitizedUrl = UrlSanitizer.sanitize(path)
+        expect(sanitizedUrl.href).toEqual("https://caloger.com/");
     })
 
     it('should test that error is thrown on invalid URL', () => {
