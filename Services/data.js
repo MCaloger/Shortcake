@@ -1,3 +1,5 @@
+const logger = require('./logger');
+
 const sqlite3 = require('sqlite3').verbose();
 
 class DataConnector {
@@ -16,6 +18,7 @@ class DataConnector {
                 );`)
             })
         } catch(err){
+            logger.error("db", err)
             throw new Error("Database error.")
         }
         
