@@ -4,7 +4,7 @@ const app = express();
 const UrlService = require("../Services/UrlService")
 const logger = require('../Services/logger')
 
-
+// Fetches code 
 app.get('/u/:code', async (req, res, next) => {
     try {
         const code = req.params.code
@@ -16,6 +16,7 @@ app.get('/u/:code', async (req, res, next) => {
     }
 })
 
+// Creates code and returns url to /get
 app.post('/new', async (req, res, next) => {
     try {
         const url = req.body.url

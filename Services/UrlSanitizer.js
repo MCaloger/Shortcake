@@ -2,7 +2,7 @@ const logger = require('../Services/logger')
 class UrlSanitizer {
 
     /**
-     * Sanitize a given string to ensue it's a proper URl and that it has an HTTP/HTTPS protocol.
+     * Sanitize a given string to ensure it's a proper URL and that it has an HTTP/HTTPS protocol.
      *
      * @param {string} input
      * @return {Url} 

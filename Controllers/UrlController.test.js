@@ -45,7 +45,7 @@ describe('Url controller', () => {
         
     })
 
-    it('should return an error on submitting a an improper url /new', async () => {
+    it('should return an error on submitting an improper url /new', async () => {
         try {
             const response = await request(app)
                 .post("/new")
@@ -57,7 +57,32 @@ describe('Url controller', () => {
         } catch(error) {
             logger.error(error)
         }
+    })
+
+    it('should return a message on submitting an undefined url to /new', async () => {
+        try {
+            const response = await request(app)
+                .post("/new")
+                .send()
         
+            expect(response.status).toEqual(400);
+            logger.info(response.body)
+        } catch(error) {
+            logger.error(error)
+        }
+    })
+
+    it('should return a message on submitting an empty url to /new', async () => {
+        try {
+            const response = await request(app)
+                .post("/new")
+                .send({url: ""})
         
+            expect(response.status).toEqual(400);
+
+            logger.info(response.body)
+        } catch(error) {
+            logger.error(error)
+        }
     })
 })
