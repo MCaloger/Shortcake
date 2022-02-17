@@ -3,10 +3,15 @@ const Utils = require("../Services/Utils")
 
 class UrlDao {
 
+    constructor(connection) {
+        console.log(connection)
+        this.connection = connection
+    }
+
     addUrl(url) {
         return new Promise((resolve, reject) => {
             let code = Utils.pickCode(process.env.CODELENGTH)
-            dbConnection.database.run("INSERT INTO urls (url_code, url_address) VALUES($code, $url);", {
+            this.connection.database.run("INSERT INTO urls (url_code, url_address) VALUES($code, $url);", {
                 $code: code,
                 $url: url
             }, (err) => {
@@ -21,10 +26,10 @@ class UrlDao {
 
     getUrlFromCode(code) {
         return new Promise((resolve, reject) => {
-            dbConnection.database.get(`SELECT url_address FROM urls WHERE url_code=$code;`, {
+            this.connection.database.get(`SELECT url_address FROM urls WHERE url_code=$code;`, {
                 $code: code,
             }, (err, row) => {
-                console.log('row', row)
+
                 if (row != undefined) {
                     resolve(row.url_address)
                 } else {
@@ -36,4 +41,4 @@ class UrlDao {
     }
 }
 
-module.exports = new UrlDao();
+module.exports = new UrlDao(dbConnection);

@@ -22,7 +22,8 @@ class UrlService {
                 throw new Error("System Error: Missing Url")
             }
         } catch (err) {
-            throw new Error("System Error", err.message)
+            console.log('err', err)
+            throw new Error("System Error, unable to create Url.")
         }
     }
 

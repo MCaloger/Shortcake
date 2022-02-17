@@ -9,7 +9,6 @@ class UrlSanitizer {
      */
     sanitize(input) {
         try {
-            console.log('input', input)
             let url = new URL(input)
 
             if(url.protocol === "http:" || url.protocol === "https:") {
@@ -18,7 +17,6 @@ class UrlSanitizer {
                 throw new Error("Invalid Url protocol, must he http or https.")
             }
         } catch (err) {
-            console.log('err', err)
             throw new Error("Invalid Url.");
         }
     }
