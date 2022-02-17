@@ -1,3 +1,4 @@
+const logger = require('../Services/logger')
 class UrlSanitizer {
 
     /**
@@ -17,6 +18,7 @@ class UrlSanitizer {
                 throw new Error("Invalid Url protocol, must he http or https.")
             }
         } catch (err) {
+            logger.error(err)
             throw new Error("Invalid Url.");
         }
     }

@@ -1,10 +1,10 @@
 const dbConnection = require('../Services/data')
+const logger = require('../Services/logger')
 const Utils = require("../Services/Utils")
 
 class UrlDao {
 
     constructor(connection) {
-        console.log(connection)
         this.connection = connection
     }
 
@@ -18,6 +18,7 @@ class UrlDao {
                 if (err === null) {
                     resolve(code)
                 } else {
+                    logger.error(err)
                     reject("Error creating Url.")
                 }
             })
@@ -33,7 +34,7 @@ class UrlDao {
                 if (row != undefined) {
                     resolve(row.url_address)
                 } else {
-
+                    logger.error(err)
                     reject(new Error("Error fetching url."))
                 }
             })

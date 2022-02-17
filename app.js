@@ -12,3 +12,5 @@ app.use(UrlController)
 app.listen(process.env.PORT, async () => {
 	console.log(`Started on port ${process.env.PORT}`)
 })
+
+module.exports = app 
