@@ -1,7 +1,6 @@
 /* eslint-disable valid-jsdoc */
 const dbConnection = require('../Services/data');
 const logger = require('../Services/logger');
-const Utils = require('../Services/Utils');
 
 /**
  * @class UrlDao
