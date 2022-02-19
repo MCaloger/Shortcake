@@ -1,4 +1,4 @@
-const Utils = require('./Utils');
+const Utils = require('../Services/Utils');
 
 describe('Utils should', () => {
   it('return a string on pickCode', () => {

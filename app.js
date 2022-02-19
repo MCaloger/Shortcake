@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const UrlController = require('./Controllers/UrlController');
+const logger = require('./Services/logger');
 
 app.use(express.json());
 
@@ -12,7 +13,7 @@ app.use(UrlController);
 
 // Create server
 app.listen(process.env.PORT, async () => {
-  console.log(`Started on port ${process.env.PORT}`);
+  logger.info(`Started on port ${process.env.PORT}`);
 });
 
 module.exports = app;

@@ -7,14 +7,21 @@ class DataConnector {
     try {
       const path = process.env.DB;
       this.database = new sqlite3.Database(path, (error) => {
-        this.database.run('DROP TABLE IF EXISTS urls;');
 
-        this.database.run(`
-                CREATE TABLE IF NOT EXISTS urls (
-                    url_id INTEGER PRIMARY KEY,
-                    url_code TEXT NOT NULL UNIQUE,
-                    url_address TEXT NOT NULL
-                );`);
+        if(error) {
+            logger.error('db', error);
+            throw new Error('Database error.');
+        } else {
+            this.database.run('DROP TABLE IF EXISTS urls;');
+
+            this.database.run(`
+                    CREATE TABLE IF NOT EXISTS urls (
+                        url_id INTEGER PRIMARY KEY,
+                        url_code TEXT NOT NULL UNIQUE,
+                        url_address TEXT NOT NULL
+                    );`);
+        }
+        
       });
     } catch (error) {
       logger.error('db', error);

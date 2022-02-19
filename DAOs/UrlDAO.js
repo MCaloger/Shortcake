@@ -3,13 +3,13 @@ const dbConnection = require('../Services/data');
 const logger = require('../Services/logger');
 
 /**
- * @class UrlDao
+ * @class UrlDAO
  */
-class UrlDao {
+class UrlDAO {
   /**
-   * Creates an instance of UrlDao.
+   * Creates an instance of UrlDAO.
    * @param {*} connection
-   * @memberof UrlDao
+   * @memberof UrlDAO
    */
   constructor(connection) {
     this.connection = connection;
@@ -19,7 +19,7 @@ class UrlDao {
      * Adds url to database
      * @param {String} HTTP/HTTPS url
      * @returns {code: String}
-     * @memberof UrlDao
+     * @memberof UrlDAO
      */
   addUrl(code, url) {
     return new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ class UrlDao {
           }
         });
       } catch (error) {
-        logger.error(error);
+        logger.error(code, url, error);
         reject(new Error('System Error'));
       }
     });
@@ -48,7 +48,7 @@ class UrlDao {
      *
      * @param {String} url code
      * @return {String} Url
-     * @memberof UrlDao
+     * @memberof UrlDAO
      */
   getUrlFromCode(code) {
     return new Promise((resolve, reject) => {
@@ -73,4 +73,4 @@ class UrlDao {
   }
 }
 
-module.exports = new UrlDao(dbConnection);
+module.exports = new UrlDAO(dbConnection);

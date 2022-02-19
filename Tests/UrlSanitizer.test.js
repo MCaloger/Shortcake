@@ -1,10 +1,10 @@
-const UrlSanitizer = require('./UrlSanitizer');
+const UrlSanitizer = require('../Services/UrlSanitizer');
 
 describe('Url sanitizer', () => {
   it('should return the Url if it validates', () => {
     const path = 'https://caloger.com';
     const sanitizedUrl = UrlSanitizer.sanitize(path);
-    expect(sanitizedUrl.href).toEqual('https://caloger.com/');
+    expect(sanitizedUrl).toEqual('https://caloger.com/');
   });
 
   it('should test that error is thrown on invalid URL', () => {

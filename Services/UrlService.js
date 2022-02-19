@@ -1,47 +1,49 @@
-const UrlDao = require('../DAOs/UrlDao');
+const UrlDAO = require('../DAOs/UrlDAO');
+const logger = require('./logger');
 const UrlSanitizer = require('./UrlSanitizer');
 const Utils = require('./Utils');
+const ValidatedUrl = require('../Models/ValidatedUrl')
 
 class UrlService {
-  /**
-     *
-     * @param {string} url
-     * @return {string} code to url
-     */
-  async createUrl(url) {
-    try {
-      if (url != '') {
-        const sanitized = UrlSanitizer.sanitize(url);
+	/**
+	 *
+	 * @param {ValidatedUrl} url
+	 * @return {string} code to url
+	 */
+	async createUrl(url) {
+		try {
+			const validatedUrl = new ValidatedUrl(url.url);
 
-        const code = Utils.pickCode(process.env.CODELENGTH);
+			const code = Utils.pickCode(process.env.CODELENGTH);
 
-        const addedUrl = await UrlDao.addUrl(code, sanitized.href);
+			const addedUrl = await UrlDAO.addUrl(code, validatedUrl.url);
 
-        return addedUrl;
-      }
-      throw new Error('System Error: Missing Url');
-    } catch (err) {
-      throw new Error('System Error, unable to create Url.');
-    }
-  }
+			return addedUrl;	
+			
+		} catch (error) {
+			logger.error("createUrl --- Error " + url + " " + error)
+			throw new Error('System Error, unable to create Url.');
+		}
+	}
 
-  /**
-     * Get url from given code
-     *
-     * @param {string} code
-     * @return {string} url
-     * @memberof UrlService
-     */
-  async getUrl(code) {
-    try {
-      const url = await UrlDao.getUrlFromCode(code);
+	/**
+	 * Get url from given code
+	 *
+	 * @param {string} code
+	 * @return {string} url
+	 * @memberof UrlService
+	 */
+	async getUrl(code) {
+		try {
 
-      const sanitizedUrl = UrlSanitizer.sanitize(url);
-      return sanitizedUrl;
-    } catch (err) {
-      throw new Error('System Error: Unable to get Url from code.');
-    }
-  }
+			const url = await UrlDAO.getUrlFromCode(code);
+			const sanitizedUrl = UrlSanitizer.sanitize(url);
+			return sanitizedUrl;
+		} catch (error) {
+			logger.error("codeis", code, "err", error)
+			throw new Error('System Error: Unable to get Url from code.');
+		}
+	}
 }
 
 module.exports = new UrlService();
