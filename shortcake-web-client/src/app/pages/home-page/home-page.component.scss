@@ -1,0 +1,12 @@
+.form-col {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.form-col > * {
+    margin-bottom: 10px;
+}
+
+.form {
+    padding: 10px;
+}

@@ -5,13 +5,14 @@ const logger = require('../Services/logger');
 const ValidatedUrl = require('../Models/ValidatedUrl')
 
 // Fetches code
-app.get('/u/:code', async (request, response, next) => {
+app.get('/api/v1/u/:code', async (request, response, next) => {
     try {
         const {
             code
         } = request.params;
         const url = await UrlService.getUrl(code);
         response.status(200).json({
+            code,
             url
         });
     } catch (err) {
@@ -21,7 +22,7 @@ app.get('/u/:code', async (request, response, next) => {
 });
 
 // Creates code and returns url to /get
-app.post('/new', async (request, response, next) => {
+app.post('/api/v1/new', async (request, response, next) => {
     try {
         const url = new ValidatedUrl(request.body.url);
 
@@ -32,7 +33,7 @@ app.post('/new', async (request, response, next) => {
 
             response.status(201).json({
                 code,
-                url: `http://${request.hostname}:${process.env.PORT}/u/${code}`,
+                url: `${process.env.BASE}/u/${code}`,
             });
         }
     } catch (error) {

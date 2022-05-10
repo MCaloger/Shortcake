@@ -1,0 +1,21 @@
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #3F51B5;
+    color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.logo {
+
+    font-weight: bold;
+}
+
+
+.navbar-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

@@ -19,7 +19,7 @@ class UrlSanitizer {
 				if (url.protocol === 'http:' || url.protocol === 'https:') {
 					return url.href;
 				} else {
-					throw new Error('Invalid Url protocol, must he http or https.');
+					throw new Error('Invalid Url protocol, must be http or https.');
 				}
 			}
 		} catch (error) {
