@@ -1,3 +1,4 @@
+const logger = require('../Services/logger');
 const UrlSanitizer = require('../Services/UrlSanitizer')
 
 class ValidatedUrl {
@@ -7,7 +8,8 @@ class ValidatedUrl {
             this.url = sanitizedUrl; 
         } catch(error) {
             this.url = null;
-            throw new Error("Invalid Url.");
+            logger.error('ValidatedUrl error:', error, url);
+            throw new Error("Invalid Url.", url);
         }
     }
 }

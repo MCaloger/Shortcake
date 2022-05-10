@@ -36,6 +36,7 @@ class UrlDAO {
             reject(new Error('Error creating Url.'));
           }
         });
+		logger.info("addUrl", code, url);
       } catch (error) {
         logger.error(code, url, error);
         reject(new Error('System Error'));
@@ -65,6 +66,30 @@ class UrlDAO {
                 reject(new Error('Error fetching url.'));
               }
             });
+		logger.info("getUrlFromCode", code);
+      } catch (error) {
+        logger.error(error);
+        reject(new Error('System Error'));
+      }
+    });
+  }
+
+  getCodeFromUrl(url) {
+    return new Promise((resolve, reject) => {
+      try {
+        this.connection.database.get(
+			'SELECT url_code FROM urls WHERE url_address=$url;'
+			, {
+				$url: url,
+			}, (error, row) => {
+				if (row != undefined) {
+				resolve(row.url_code);
+				} else {
+				resolve(null);
+				}
+		});
+
+        logger.info("getCodeFromUrl", url);
       } catch (error) {
         logger.error(error);
         reject(new Error('System Error'));

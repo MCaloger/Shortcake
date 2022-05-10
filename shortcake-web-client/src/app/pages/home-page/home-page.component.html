@@ -1,12 +1,18 @@
-<div class="form-col">
-    <label for="url">Website link:</label>
-    <input id="url" name="url" [formControl]="formUrl" type="text" />
-    <button class="btn-interactive" (click)="createUrl()">Create</button>
-</div>
+<div class="page-container">
+    <div  class="form-col section-container">
+        <label for="url">Website link:</label>
+        <input id="url" name="url" [formControl]="formUrl" type="text" />
+        <div *ngIf="errorMessage != undefined" class="error-message">{{ errorMessage }}</div>
+        <button class="btn-interactive" (click)="createUrl()">Create</button>
+    </div>
 
-<div *ngIf="code != undefined">
-    <div class="form-col">
-        <input id="urlDisplay" name="urlDisplay" [value]="code.url" type="text" readonly />
-        <button class="btn-interactive" (click)="copyToClipboard()">{{ copyText }}</button>
-    </div>  
+    <div *ngIf="code != undefined">
+        
+        <div class="form-col section-container">
+            <label for="urlDisplay">Link to code:</label>
+            <input id="urlDisplay" name="urlDisplay" [value]="code.url" type="text" readonly />
+            <button class="btn-interactive" (click)="copyToClipboard()">{{ copyText }}</button>
+            <button class="btn-interactive" (click)="navigateToHome()">Done</button>
+        </div>  
+    </div>
 </div>

@@ -1,3 +1,4 @@
+import { UrlPageComponent } from './pages/url-page/url-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { NgModule } from '@angular/core';
@@ -6,6 +7,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
+  { path: ':code', component: UrlPageComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

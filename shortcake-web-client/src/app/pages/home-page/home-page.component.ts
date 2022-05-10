@@ -1,5 +1,5 @@
 import { Code } from './../../Model/code';
-import { UrlService } from './../../url-service.service';
+import { UrlService } from '../../url.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -14,6 +14,7 @@ export class HomePageComponent implements OnInit {
   formUrl = new FormControl('');
   code: Code | undefined;
   copyText: string = "Copy to clipboard";
+  errorMessage: string | undefined;
 
   constructor(private urlService: UrlService) { }
 
@@ -23,6 +24,9 @@ export class HomePageComponent implements OnInit {
   createUrl() {
     this.urlService.createUrl(this.formUrl.value).subscribe((data: Code) => {
       this.code = data;
+      this.errorMessage = undefined;
+    }, (error) => {
+      this.errorMessage = "Error creating url.";
     });
   }
 
@@ -31,6 +35,10 @@ export class HomePageComponent implements OnInit {
       navigator.clipboard.writeText(this.code?.url);
       this.copyText = "Copied!";
     }
+  }
+
+  navigateToHome() {
+    window.location.href = "/";
   }
 
 }

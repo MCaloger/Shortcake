@@ -16,6 +16,11 @@ app.use(cors({
 // Add Url routes
 app.use(UrlController);
 
+app.use((err, req, res, next) => {
+  logger.error(err.stack);
+  res.status(500).send({ error: err });
+})
+
 // Create server
 app.listen(process.env.PORT, async () => {
   logger.info(`Started on port ${process.env.PORT}`);

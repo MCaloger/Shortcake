@@ -1,6 +1,10 @@
-<div>
-    Go to 
-    <a [href]="href">
-        {{ href }}
+<div class="page-container" *ngIf="message === undefined">
+    Redirecting in 3 seconds ...
+    <a class="link" [href]="href">
+        Go to {{ href }}
     </a>
+</div>
+
+<div class="page-container" *ngIf="message !== undefined">
+    {{ message }}
 </div>

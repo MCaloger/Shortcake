@@ -12,14 +12,21 @@ class UrlService {
 	 */
 	async createUrl(url) {
 		try {
+
 			const validatedUrl = new ValidatedUrl(url.url);
 
-			const code = Utils.pickCode(process.env.CODELENGTH);
+			const checkIfCodeExists = await this.getCode(validatedUrl.url);
 
-			const addedUrl = await UrlDAO.addUrl(code, validatedUrl.url);
 
-			return addedUrl;	
-			
+			if(checkIfCodeExists === null) {
+				const code = Utils.pickCode(process.env.CODELENGTH);
+
+				const addedUrl = await UrlDAO.addUrl(code, validatedUrl.url);
+
+				return addedUrl;
+			} else {
+				return checkIfCodeExists;
+			}
 		} catch (error) {
 			logger.error("createUrl --- Error " + url + " " + error)
 			throw new Error('System Error, unable to create Url.');
@@ -43,6 +50,17 @@ class UrlService {
 			logger.error("codeis", code, "err", error)
 			throw new Error('System Error: Unable to get Url from code.');
 		}
+	}
+
+	async getCode(url) {
+		try {
+			const code = await UrlDAO.getCodeFromUrl(url);
+			return code;
+		} catch(error) {
+			logger.error("Error getting code from URL", error)
+			throw new Error('System Error: Unable to get Code from Url.');
+		}
+		
 	}
 }
 

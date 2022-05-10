@@ -23,7 +23,7 @@ class UrlSanitizer {
 				}
 			}
 		} catch (error) {
-			logger.error(error);
+			logger.error("sanitize error:", error, input);
 			throw new Error('Invalid Url.');
 		}
 	}
