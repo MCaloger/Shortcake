@@ -16,7 +16,6 @@ app.get('/api/v1/u/:code', async (request, response, next) => {
         });
         logger.info('Fetches code', url);
     } catch (error) {
-
         logger.error(error);
         return next(error);
     }
@@ -27,16 +26,13 @@ app.post('/api/v1/new', async (request, response, next) => {
     try {
         const url = request.body.url
 
-        if (request.body == null || request.body == undefined || url == null || url == '' || url == undefined) {
-            response.status(400).send('Error: Url is empty.');
-        } else {
-            const code = await UrlService.createUrl(url);
+        const code = await UrlService.createUrl(url);
 
-            response.status(201).json({
-                code,
-                url: `${process.env.BASE}/${code}`,
-            });
-        }
+        response.status(201).json({
+            code,
+            url: `${process.env.BASE}/${code}`,
+        });
+        
         logger.info('Creates code and returns url to /get', url);
     } catch (error) {
         logger.error('/api/v1/new', error);

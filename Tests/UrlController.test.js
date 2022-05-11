@@ -42,7 +42,7 @@ describe('Url controller', () => {
         .post('/api/v1/new')
         .send({url: 'example bad url'});
 
-    expect(response.status).toEqual(400);
+    expect(response.status).toEqual(500);
 
     logger.info('should return an error on submitting an improper url /new', response.body);
 
@@ -54,7 +54,7 @@ describe('Url controller', () => {
         .post('/api/v1/new')
         .send();
 
-    expect(response.status).toEqual(400);
+    expect(response.status).toEqual(500);
     logger.info('should return a message on submitting an undefined url to /new', response.body);
 
   });
@@ -65,7 +65,7 @@ describe('Url controller', () => {
         .post('/api/v1/new')
         .send({url: ''});
 
-    expect(response.status).toEqual(400);
+    expect(response.status).toEqual(500);
 
     logger.info('should return a message on submitting an empty url to /new', response.body);
 

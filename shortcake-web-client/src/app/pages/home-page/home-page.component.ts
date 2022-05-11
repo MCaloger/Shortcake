@@ -27,7 +27,7 @@ export class HomePageComponent implements OnInit {
       this.errorMessage = undefined;
     }, (error) => {
       this.code = undefined;
-      this.errorMessage = error.error;
+      this.errorMessage = error.error || "Client error";
     });
   }
 

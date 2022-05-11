@@ -1,4 +1,5 @@
 const logger = require('./logger');
+const UserError = require('../Models/UserError');
 
 class UrlSanitizer {
 	/**
@@ -10,22 +11,22 @@ class UrlSanitizer {
 	 * @memberof UrlSanitizer
 	 */
 	sanitize(input) {
+
 		try {
 			if (input === null || input === '' || typeof (input) === 'undefined') {
-				throw new Error("URL Can't be empty.")
+				throw new UserError('MISSING_URL_ERR', 'URL is missing')
 			} else {
 				const url = new URL(input);
 
 				if (url.protocol === 'http:' || url.protocol === 'https:') {
 					return url.href;
 				} else {
-					throw new Error('Invalid URL protocol. Url must start with http or https.');
+					throw new UserError('PROTOCOL_MISSING_ERR', 'Invalid URL protocol. URL must start with http or https');
 				}
 			}
-		} catch (error) {
-			logger.error("sanitize error:", error, input);
-
-			throw new Error("Invalid URL");
+		} catch(error) {
+			logger.error("Error sanitizing url", error)
+			throw new UserError(error.errorMessage || "INVALID_URL_ERR", error.humanMessage || "URL is invalid");
 		}
 	}
 }

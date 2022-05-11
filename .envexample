@@ -1,4 +1,4 @@
 PORT=3000
-DB=db\database.db
+DB=data.db
 CODELENGTH=10
 BASE=http://localhost:4200

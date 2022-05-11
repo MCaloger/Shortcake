@@ -18,7 +18,7 @@ describe('Url services createUrl', () => {
             const url = '';
             await UrlService.createUrl(url);
         } catch(error) {
-            expect(error.message).toMatch("Error: Invalid URL");
+            expect(error.message).toMatch("MISSING_URL_ERR");
         }
 
     })
@@ -28,7 +28,7 @@ describe('Url services createUrl', () => {
             const url = 'abcd';
             await UrlService.createUrl(url);
         } catch (error) {
-            expect(error.message).toMatch("Error: Invalid URL")
+            expect(error.message).toMatch("INVALID_URL_ERR")
         }
     })
 })
@@ -52,7 +52,7 @@ describe('Url services getUrl', () => {
             await UrlService.createUrl(url);
         }
         
-        await expect(action()).rejects.toThrow('Error: Invalid URL')
+        await expect(action()).rejects.toThrow('MISSING_URL_ERR')
 
     })
 
@@ -62,7 +62,7 @@ describe('Url services getUrl', () => {
             await UrlService.createUrl(url);
         }
         
-        await expect(action()).rejects.toThrow('Error: Invalid URL')
+        await expect(action()).rejects.toThrow('INVALID_URL_ERR')
     })
 
     it('should return the same code on re-entered urls', async () => {

@@ -2,6 +2,7 @@ const UrlDAO = require('../DAOs/UrlDAO');
 const logger = require('./logger');
 const UrlSanitizer = require('./UrlSanitizer');
 const Utils = require('./Utils');
+const UserError = require('../Models/UserError');
 
 class UrlService {
 	/**
@@ -25,8 +26,8 @@ class UrlService {
 				return checkIfCodeExists;
 			}
 		} catch (error) {
-			logger.error("createUrl --- Error " + url + " " + error)
-			throw new Error(error);
+			logger.error("createUrl" + url + " " + error)
+			throw error;
 		}
 	}
 
@@ -39,13 +40,12 @@ class UrlService {
 	 */
 	async getUrl(code) {
 		try {
-
 			const url = await UrlDAO.getUrlFromCode(code);
 			const sanitizedUrl = UrlSanitizer.sanitize(url);
 			return sanitizedUrl;
 		} catch (error) {
-			logger.error("codeis", code, "err", error)
-			throw new Error('Unable to get Url from code.');
+			logger.error("GetUrl", code, "err", error)
+			throw new UserError(error.errorMessage || "INVALID_CODE_ERR", error.humanMessage || "Code does not exist");
 		}
 	}
 

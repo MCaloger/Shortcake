@@ -2,15 +2,17 @@ const logger = require('./logger');
 
 const sqlite3 = require('sqlite3').verbose();
 
+const ServerError = require('../Models/ServerError');
+
 class DataConnector {
   constructor() {
     try {
       const path = process.env.DB;
-      this.database = new sqlite3.Database(path, (error) => {
+      this.database = new sqlite3.Database(`db/${path}`, (error) => {
 
         if(error) {
             logger.error('db', error);
-            throw new Error('Database error.');
+            throw new ServerError('Unable to connect to database.', 'Database Error', 500, true);
         } else {
             this.database.run('DROP TABLE IF EXISTS urls;');
 
@@ -25,7 +27,7 @@ class DataConnector {
       });
     } catch (error) {
       logger.error('db', error);
-      throw new Error('Database error.');
+      throw new ServerError('Unable to connect to database.', 'Database Error', 500, true);
     }
   }
 }
