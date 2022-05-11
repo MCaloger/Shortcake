@@ -26,7 +26,8 @@ export class HomePageComponent implements OnInit {
       this.code = data;
       this.errorMessage = undefined;
     }, (error) => {
-      this.errorMessage = "Error creating url.";
+      this.code = undefined;
+      this.errorMessage = error.error;
     });
   }
 

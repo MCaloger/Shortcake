@@ -28,11 +28,9 @@ export class UrlPageComponent implements OnInit {
 							window.location.href = this.href;
 						}
 					}, 3000);
-				} else {
-					this.message = "Code not found.";
 				}
 			}, (error) => {
-				this.message = "Code not found.";
+				this.message = error.error;
 			})
 			
     	}

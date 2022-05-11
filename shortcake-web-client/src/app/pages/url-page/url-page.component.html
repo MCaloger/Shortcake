@@ -1,10 +1,14 @@
-<div class="page-container" *ngIf="message === undefined">
+<div class="page-container">
+
+
+<div class="section-container" *ngIf="message === undefined">
     Redirecting in 3 seconds ...
     <a class="link" [href]="href">
         Go to {{ href }}
     </a>
 </div>
 
-<div class="page-container" *ngIf="message !== undefined">
+<div class="error-message" *ngIf="message !== undefined">
     {{ message }}
+</div>
 </div>

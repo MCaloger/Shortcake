@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const UrlService = require('../Services/UrlService');
 const logger = require('../Services/logger');
-const ValidatedUrl = require('../Models/ValidatedUrl')
 
 // Fetches code
 app.get('/api/v1/u/:code', async (request, response, next) => {
@@ -16,9 +15,10 @@ app.get('/api/v1/u/:code', async (request, response, next) => {
             url
         });
         logger.info('Fetches code', url);
-    } catch (err) {
-        logger.error(err);
-        return next("Error, invalid URL");
+    } catch (error) {
+
+        logger.error(error);
+        return next(error);
     }
 });
 
@@ -28,10 +28,9 @@ app.post('/api/v1/new', async (request, response, next) => {
         const url = request.body.url
 
         if (request.body == null || request.body == undefined || url == null || url == '' || url == undefined) {
-            response.status(400).send('You must send a valid URL.');
+            response.status(400).send('Error: Url is empty.');
         } else {
-            const validatedUrl = new ValidatedUrl(request.body.url);
-            const code = await UrlService.createUrl(validatedUrl);
+            const code = await UrlService.createUrl(url);
 
             response.status(201).json({
                 code,
@@ -41,7 +40,7 @@ app.post('/api/v1/new', async (request, response, next) => {
         logger.info('Creates code and returns url to /get', url);
     } catch (error) {
         logger.error('/api/v1/new', error);
-        return next(error.message);
+        return next(error);
     }
 });
 

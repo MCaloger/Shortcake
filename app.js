@@ -18,7 +18,7 @@ app.use(UrlController);
 
 app.use((err, req, res, next) => {
   logger.error(err.stack);
-  res.status(500).send({ error: err });
+  res.status(400).send(err.message);
 })
 
 // Create server

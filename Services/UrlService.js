@@ -2,7 +2,6 @@ const UrlDAO = require('../DAOs/UrlDAO');
 const logger = require('./logger');
 const UrlSanitizer = require('./UrlSanitizer');
 const Utils = require('./Utils');
-const ValidatedUrl = require('../Models/ValidatedUrl')
 
 class UrlService {
 	/**
@@ -12,16 +11,14 @@ class UrlService {
 	 */
 	async createUrl(url) {
 		try {
+			const validatedUrl = await UrlSanitizer.sanitize(url);
 
-			const validatedUrl = new ValidatedUrl(url.url);
-
-			const checkIfCodeExists = await this.getCode(validatedUrl.url);
-
+			const checkIfCodeExists = await this.getCode(validatedUrl);
 
 			if(checkIfCodeExists === null) {
 				const code = Utils.pickCode(process.env.CODELENGTH);
 
-				const addedUrl = await UrlDAO.addUrl(code, validatedUrl.url);
+				const addedUrl = await UrlDAO.addUrl(code, validatedUrl);
 
 				return addedUrl;
 			} else {
@@ -29,7 +26,7 @@ class UrlService {
 			}
 		} catch (error) {
 			logger.error("createUrl --- Error " + url + " " + error)
-			throw new Error('System Error, unable to create Url.');
+			throw new Error(error);
 		}
 	}
 
@@ -48,7 +45,7 @@ class UrlService {
 			return sanitizedUrl;
 		} catch (error) {
 			logger.error("codeis", code, "err", error)
-			throw new Error('System Error: Unable to get Url from code.');
+			throw new Error('Unable to get Url from code.');
 		}
 	}
 
@@ -58,7 +55,8 @@ class UrlService {
 			return code;
 		} catch(error) {
 			logger.error("Error getting code from URL", error)
-			throw new Error('System Error: Unable to get Code from Url.');
+			
+			throw new Error('Unable to get Code from Url.');
 		}
 		
 	}

@@ -12,19 +12,20 @@ class UrlSanitizer {
 	sanitize(input) {
 		try {
 			if (input === null || input === '' || typeof (input) === 'undefined') {
-				throw new Error("Empty URL.")
+				throw new Error("URL Can't be empty.")
 			} else {
 				const url = new URL(input);
 
 				if (url.protocol === 'http:' || url.protocol === 'https:') {
 					return url.href;
 				} else {
-					throw new Error('Invalid Url protocol, must be http or https.');
+					throw new Error('Invalid URL protocol. Url must start with http or https.');
 				}
 			}
 		} catch (error) {
 			logger.error("sanitize error:", error, input);
-			throw new Error('Invalid Url.');
+
+			throw new Error("Invalid URL");
 		}
 	}
 }

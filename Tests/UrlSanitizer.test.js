@@ -18,12 +18,12 @@ describe('Url sanitizer', () => {
   it('should test that error is thrown on invalid URL', () => {
     expect(() => {
       UrlSanitizer.sanitize('!@#$%^&*()////<script>alert("hello");</script>');
-    }).toThrow('Invalid Url.');
+    }).toThrow('Invalid URL');
   });
 
   it('should test that error is thrown on invalid URL protocol', () => {
     expect(() => {
       UrlSanitizer.sanitize('javascript:console.log(\'javascript\');alert(\'javascript\')');
-    }).toThrow('Invalid Url.');
+    }).toThrow('Invalid URL');
   });
 });
