@@ -19,7 +19,9 @@ class UrlService {
 			if(checkIfCodeExists === null) {
 				const code = Utils.pickCode(process.env.CODELENGTH);
 
-				const addedUrl = await UrlDAO.addUrl(code, validatedUrl);
+				const addedUrl = "u/" + await UrlDAO.addUrl(code, validatedUrl);
+
+				console.log("createUrl", checkIfCodeExists, addedUrl, code)
 
 				return addedUrl;
 			} else {
